@@ -1,0 +1,26 @@
+# Secrets — never commit these
+.ssh/
+*.pem
+*_key
+*_key.pub
+
+# Built binaries
+ssh-portfolio
+ssh-portfolio.exe
+
+# Local source images (used only for regenerating portrait.txt)
+me.jpeg
+me.jpg
+me.png
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.heic
+
+# OS / editor cruft
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
