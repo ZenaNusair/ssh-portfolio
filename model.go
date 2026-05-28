@@ -438,7 +438,7 @@ func (m Model) viewContact() string {
 %s
 
   %s   zena.m.nusair@gmail.com
-  %s   +962 791 759 868
+  %s   +962 0791759868
   %s   github.com/ZenaNusair
   %s   ssh ssh.zena.dev
 
@@ -450,7 +450,7 @@ func (m Model) viewContact() string {
 		label(" #"),
 		label(" ⌥"),
 		label(" →"),
-		styleMuted.Italic(true).Render("("+`pro tip: ssh is the fastest way. you're already here.`+")"),
+		styleMuted.Italic(true).Render("(based in amman · open to remote)"),
 	)
 }
 
