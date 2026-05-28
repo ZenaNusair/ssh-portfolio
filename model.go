@@ -450,7 +450,7 @@ func (m Model) viewContact() string {
 		label(" #"),
 		label(" ⌥"),
 		label(" →"),
-		styleMuted.Italic(true).Render("(based in amman · open to remote)"),
+		styleMuted.Italic(true).Render("(let's build something)"),
 	)
 }
 
