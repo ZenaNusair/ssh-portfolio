@@ -55,6 +55,7 @@ type Model struct {
 	blink      bool   // blinking cursor toggle
 	frame      int    // tick counter
 	showReflection bool   // press `?` to reveal the reflection essay
+	useBraille bool   // press `b` to switch portrait from ASCII to braille
 	fortune    string // rotating one-liner shown at the bottom
 }
 
@@ -73,10 +74,11 @@ var fortunes = []string{
 
 func NewModel(w, h int) Model {
 	return Model{
-		width:   w,
-		height:  h,
-		current: tabAbout,
-		fortune: fortunes[rand.Intn(len(fortunes))],
+		width:      w,
+		height:     h,
+		current:    tabAbout,
+		useBraille: true, // braille by default; press 'b' to toggle to ASCII
+		fortune:    fortunes[rand.Intn(len(fortunes))],
 	}
 }
 
@@ -106,6 +108,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.showReflection = !m.showReflection
 		case "f":
 			m.fortune = fortunes[rand.Intn(len(fortunes))]
+		case "b":
+			m.useBraille = !m.useBraille
 		}
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
@@ -199,10 +203,14 @@ func (m Model) View() string {
 		rightW = 59 // tab bar needs ~59 cols
 	}
 
+	portraitArt := PortraitASCII
+	if m.useBraille {
+		portraitArt = PortraitBraille
+	}
 	portrait := lipgloss.NewStyle().
 		Foreground(colorPrimary).
 		Width(leftW).
-		Render(Portrait)
+		Render(portraitArt)
 
 	// ── Right column content ──────────────────────────────────
 	// figlet name with snow falling through it (active tab's accent)
@@ -242,7 +250,7 @@ func (m Model) View() string {
 		}
 	}
 
-	help := styleHelp.Render("[← → switch · q quit]")
+	help := styleHelp.Render("[← → switch · b for Windows view · q quit]")
 	fortuneLine := lipgloss.NewStyle().
 		Foreground(colorMuted).
 		Italic(true).
@@ -440,7 +448,6 @@ func (m Model) viewContact() string {
   %s   zena.m.nusair@gmail.com
   %s   +962 0791759868
   %s   github.com/ZenaNusair
-  %s   ssh ssh.zena.dev
 
 %s
 `,
@@ -449,7 +456,6 @@ func (m Model) viewContact() string {
 		label(" @"),
 		label(" #"),
 		label(" ⌥"),
-		label(" →"),
 		styleMuted.Italic(true).Render("(let's build something)"),
 	)
 }
