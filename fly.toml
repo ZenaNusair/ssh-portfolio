@@ -25,5 +25,5 @@ primary_region = "fra"
     timeout = "5s"
 
 [[vm]]
-  size = "performance-1x"
-  memory = "2gb"
+  size = "shared-cpu-1x"
+  memory = "256mb"
